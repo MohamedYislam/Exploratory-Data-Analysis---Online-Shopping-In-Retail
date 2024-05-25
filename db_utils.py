@@ -53,9 +53,9 @@ class RDSDatabaseConnector:
         return engine
 
 
-yaml_file = "credentials.yaml"
-test_connector = RDSDatabaseConnector(yaml_file)
+# yaml_file = "credentials.yaml"
+# test_connector = RDSDatabaseConnector(yaml_file)
 
-print(test_connector)
-print(test_connector.creds)
-print(test_connector.engine, "<test_connector.engine")
+# print(test_connector)
+# print(test_connector.creds)
+# print(test_connector.engine, "<test_connector.engine")
