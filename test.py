@@ -33,3 +33,5 @@ csv_file_path = "customer_activity.csv"
 data_extractor.save_to_csv(data, csv_file_path)
 
 print(f"Data saved to {csv_file_path}")
+
+#
