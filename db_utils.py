@@ -6,14 +6,14 @@ class RDSDatabaseConnector:
     """
     
     # Task 2 Step 4
-    def __init__(self, creds):
+    def __init__(self, creds_file_path):
         """
         Initialize the RDSDatabaseConnector with database credentials.
         
         Args:
             creds (dict): A dictionary containing the database credentials.
         """
-        self.creds = creds  # Store the credentials as an instance attribute
+        self.creds = self._read_db_creds(creds_file_path)  # Read and store the credentials
 
     # Task 2 Step 3
     def read_db_creds(self, file_path):  
