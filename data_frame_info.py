@@ -1,14 +1,14 @@
 import pandas as pd
 
 class DataFrameInfo:
-    def __init__(self, df: pd.DataFrame):
+    def __init__(self, data_frame: pd.DataFrame):
         """
         Initialize the DataFrameInfo class with a DataFrame.
 
         Args:
             df (pd.DataFrame): The DataFrame to be analyzed.
         """
-        self.df = df
+        self.df = data_frame
 
     def describe_columns(self):
         """
@@ -84,5 +84,4 @@ class DataFrameInfo:
             pd.Series: A series with the percentage of NULL values for each column.
         """
         null_percent = self.df.isnull().mean() * 100
-        print("Percentage of NULL values in each column:\n", null_percent)
         return null_percent
