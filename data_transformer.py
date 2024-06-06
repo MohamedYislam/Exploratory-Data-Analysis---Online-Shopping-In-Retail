@@ -15,26 +15,24 @@ class DataTransformer:
         """
         self.df = data_frame.copy()
 
-
     def convert_columns(self, columns, dtype, errors='coerce'):
         """
         Convert specified columns to the specified data type.
 
         Args:
-            columns (list or str): List of columns or a single column name to be converted.
+            columns (list): List of columns to be converted.
             dtype (str or type): The data type to convert the columns to.
             errors (str, optional): How to handle errors ('raise', 'ignore', 'coerce'). Defaults to 'coerce'.
 
         Returns:
             pd.DataFrame: The DataFrame with converted columns.
         """
-
         for column in columns:
             try:
                 if is_numeric_dtype(dtype):
                     self.df[column] = pd.to_numeric(self.df[column], errors=errors)
                 else:
-                    self.df[column] = self.df[column].astype(dtype)                
+                    self.df[column] = self.df[column].astype(dtype)
             except KeyError:
                 print(f"Column '{column}' does not exist in the DataFrame")
             except Exception as e:
@@ -42,54 +40,45 @@ class DataTransformer:
 
         return self.df
 
-    # Converting Columns and cleaning
+    def impute_null(self, columns, method='mean'):
+        """
+        Impute missing values in the specified DataFrame columns using the specified method.
 
-    # def convert_columns(self):
-    #     """
-    #     Convert columns to the correct format for the DataFrame.
-    #     """
-    #     # Convert 'month' to categorical
-    #     self.df['month'] = self.df['month'].astype('category')
+        Args:
+            columns (list): List of columns to impute missing values for.
+            method (str): The method to use for imputation ('mean', 'median', 'mode').
 
-    #     # Convert 'operating_systems' to categorical
-    #     self.df['operating_systems'] = self.df['operating_systems'].astype('category')
+        Returns:
+            pd.DataFrame: The DataFrame with imputed columns.
+        """
+        for column in columns:
+            if column not in self.df.columns:
+                print(f"Column '{column}' does not exist in the DataFrame")
+                continue
 
-    #     # Convert 'browser' to categorical
-    #     self.df['browser'] = self.df['browser'].astype('category')
+            if method == 'mean':
+                value = self.df[column].mean()
+            elif method == 'median':
+                value = self.df[column].median()
+            elif method == 'mode':
+                value = self.df[column].mode()[0]
+            else:
+                print(f"Method '{method}' is not recognized. Use 'mean', 'median', or 'mode'.")
+                continue
 
-    #     # Convert 'region' to categorical
-    #     self.df['region'] = self.df['region'].astype('category')
+            self.df[column] = self.df[column].fillna(value)
+        
+        return self.df
 
-    #     # Convert 'traffic_type' to categorical
-    #     self.df['traffic_type'] = self.df['traffic_type'].astype('category')
+    def remove_null(self, columns):
+        """
+        Remove rows with null values in the specified columns.
 
-    #     # Convert 'visitor_type' to categorical
-    #     self.df['visitor_type'] = self.df['visitor_type'].astype('category')
+        Args:
+            columns (list): List of columns to check for null values.
 
-    #     # Convert 'weekend' to boolean
-    #     self.df['weekend'] = self.df['weekend'].astype('bool')
-
-    #     # Convert 'revenue' to boolean
-    #     self.df['revenue'] = self.df['revenue'].astype('bool')
-
-    #     # Convert numeric columns to appropriate numeric types
-    #     self.df['administrative'] = pd.to_numeric(self.df['administrative'], errors='coerce')
-    #     self.df['administrative_duration'] = pd.to_numeric(self.df['administrative_duration'], errors='coerce')
-    #     self.df['informational'] = pd.to_numeric(self.df['informational'], errors='coerce')
-    #     self.df['informational_duration'] = pd.to_numeric(self.df['informational_duration'], errors='coerce')
-    #     self.df['product_related'] = pd.to_numeric(self.df['product_related'], errors='coerce')
-    #     self.df['product_related_duration'] = pd.to_numeric(self.df['product_related_duration'], errors='coerce')
-    #     self.df['bounce_rates'] = pd.to_numeric(self.df['bounce_rates'], errors='coerce')
-    #     self.df['exit_rates'] = pd.to_numeric(self.df['exit_rates'], errors='coerce')
-    #     self.df['page_values'] = pd.to_numeric(self.df['page_values'], errors='coerce')
-
-    #     return self.df
-
-
-# Example usage:
-# from data_transformer import DataTransformer
-
-# Initialize the DataTransformer with a DataFrame
-# transformer = DataTransformer(data)
-# Perform transformations
-# transformed_data = transformer.transform_method_example()
+        Returns:
+            pd.DataFrame: The DataFrame with rows containing null values in the specified columns removed.
+        """
+        self.df = self.df.dropna(subset=columns)
+        return self.df
