@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy.stats import boxcox, probplot
+from tabulate import tabulate
+import math
 
 class Plotter:
     """
@@ -85,20 +88,100 @@ class Plotter:
             df (pd.DataFrame): The DataFrame to visualize.
             columns (list): The list of columns to check skewness.
         """
-        for column in columns:
+        # Number of columns for the grid
+        num_columns = len(columns)
+        num_rows = math.ceil(num_columns / 3)
+
+        # Create subplots with a specific size
+        fig, axes = plt.subplots(num_rows, 3, figsize=(20, num_rows * 6))
+
+        # Flatten axes array for easy iteration
+        axes = axes.flatten()
+
+        for idx, column in enumerate(columns):
+            # Select the axis for the current plot
+            ax = axes[idx]
+
             # Calculate skewness of the column
             skewness = df[column].skew()
-            
-            # Create a figure with a specific size
-            plt.figure(figsize=(10, 6))
-            
+
             # Plot the histogram of the column values
-            sns.histplot(df[column].dropna(), bins=50, kde=True)
-            
+            sns.histplot(df[column].dropna(), bins=50, kde=True, ax=ax)
+
             # Set the title including the skewness value
-            plt.title(f'Distribution of Values in {column} (Skewness: {skewness:.2f})')
-            plt.xlabel(column)
-            plt.ylabel('Frequency')
+            ax.set_title(f'Distribution of Values in {column} (Skewness: {skewness:.2f})')
+            ax.set_xlabel(column)
+            ax.set_ylabel('Frequency')
+
+        # Hide any unused subplots
+        for i in range(num_columns, len(axes)):
+            fig.delaxes(axes[i])
+
+        # Adjust layout
+        fig.tight_layout()
+
+        # Display the plot
+        plt.show()
+
+    # def plot_qq(self, df: pd.DataFrame, columns: list):
+    #     """
+    #     Plot Q-Q plots of the specified columns in a grid format.
+
+    #     Args:
+    #         df (pd.DataFrame): The DataFrame to visualize.
+    #         columns (list): The list of columns to plot.
+    #     """
+    #     # Number of columns for the grid
+    #     num_columns = len(columns)
+    #     num_rows = math.ceil(num_columns / 3)
+
+    #     # Create subplots with a specific size
+    #     fig, axes = plt.subplots(num_rows, 3, figsize=(20, num_rows * 6))
+
+    #     # Flatten axes array for easy iteration
+    #     axes = axes.flatten()
+
+    #     for idx, column in enumerate(columns):
+    #         # Select the axis for the current plot
+    #         ax = axes[idx]
+
+    #         # Create Q-Q plot
+    #         probplot(df[column].dropna(), dist="norm", plot=ax)
             
-            # Display the plot
-            plt.show()
+    #         # Set the color of the Q-Q plot line to red
+    #         ax.get_lines()[1].set_color('red')
+            
+    #         # Set the title of the subplot
+    #         ax.set_title(f'Q-Q Plot of {column}')
+
+    #     # Hide any unused subplots
+    #     for i in range(num_columns, len(axes)):
+    #         fig.delaxes(axes[i])
+
+    #     # Adjust layout
+    #     fig.tight_layout()
+
+    #     # Display the plot
+    #     plt.show()
+
+    def plot_qq(self, df: pd.DataFrame, columns: list):
+        """
+        Plot Q-Q plots of the specified columns in a grid format.
+        Args:
+            df (pd.DataFrame): The DataFrame to visualize.
+            columns (list): The list of columns to plot.
+        """
+        num_columns = 3  # Number of columns in the grid
+        num_rows = (len(columns) + num_columns - 1) // num_columns  # Calculate the number of rows needed
+        fig, axes = plt.subplots(num_rows, num_columns, figsize=(15, num_rows * 5))  # Create a grid of subplots
+
+        for i, column in enumerate(columns):
+            row, col = divmod(i, num_columns)  # Determine the row and column index in the grid
+            probplot(df[column].dropna(), dist="norm", plot=axes[row, col])  # Create Q-Q plot
+            axes[row, col].get_lines()[1].set_color('red')  # Set the color of the Q-Q plot line to red
+            axes[row, col].set_title(f'Q-Q Plot of {column}')  # Set the title of the subplot
+
+        plt.tight_layout()  # Adjust subplots to fit into the figure area
+        plt.show()  # Display the plot
+
+
