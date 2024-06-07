@@ -1,5 +1,8 @@
 import pandas as pd
+import numpy as np
 from pandas.api.types import is_numeric_dtype
+from scipy import stats
+
 
 class DataTransformer:
     """
@@ -81,4 +84,34 @@ class DataTransformer:
             pd.DataFrame: The DataFrame with rows containing null values in the specified columns removed.
         """
         self.df = self.df.dropna(subset=columns)
+        return self.df
+
+
+    def transform_skewed_columns(self, columns, method='box-cox'):
+        """
+        Apply transformation to specified skewed columns to reduce skewness.
+
+        Args:
+            columns (list): List of columns to transform.
+            method (str): The transformation method to use ('box-cox' or 'log').
+
+        Returns:
+            pd.DataFrame: The DataFrame with transformed columns.
+        """
+        for column in columns:
+            if column not in self.df.columns:
+                print(f"Column '{column}' does not exist in the DataFrame")
+                continue
+
+            if method == 'box-cox':
+                # Apply Box-Cox transformation
+                self.df[column] = self.df[column].apply(lambda x: np.log(x) if x <= 0 else x)
+                self.df[column], _ = stats.boxcox(self.df[column].dropna())
+            elif method == 'log':
+                # Apply log transformation
+                self.df[column] = self.df[column].apply(lambda x: np.log(x) if x > 0 else np.nan)
+            else:
+                print(f"Method '{method}' is not recognized. Use 'box-cox' or 'log'.")
+                continue
+
         return self.df
