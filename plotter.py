@@ -237,3 +237,24 @@ class Plotter:
     #     plt.show()  # Display the plot
 
 
+    def correlation_matrix(self, df: pd.DataFrame):
+        """
+        Plot a heatmap of the correlation matrix of the DataFrame.
+
+        Args:
+            df (pd.DataFrame): The DataFrame to visualize.
+        """
+        # Calculate the correlation matrix
+        corr = df.corr()
+        
+        # Create a figure with a specific size
+        plt.figure(figsize=(12, 10))
+        
+        # Use seaborn to create a heatmap of the correlation matrix
+        sns.heatmap(corr, annot=True, fmt=".2f", cmap='coolwarm', linewidths=0.5)
+        
+        # Set the title of the plot
+        plt.title('Correlation Matrix')
+        
+        # Display the plot
+        plt.show()
