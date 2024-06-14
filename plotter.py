@@ -123,65 +123,117 @@ class Plotter:
         # Display the plot
         plt.show()
 
-    # def plot_qq(self, df: pd.DataFrame, columns: list):
-    #     """
-    #     Plot Q-Q plots of the specified columns in a grid format.
-
-    #     Args:
-    #         df (pd.DataFrame): The DataFrame to visualize.
-    #         columns (list): The list of columns to plot.
-    #     """
-    #     # Number of columns for the grid
-    #     num_columns = len(columns)
-    #     num_rows = math.ceil(num_columns / 3)
-
-    #     # Create subplots with a specific size
-    #     fig, axes = plt.subplots(num_rows, 3, figsize=(20, num_rows * 6))
-
-    #     # Flatten axes array for easy iteration
-    #     axes = axes.flatten()
-
-    #     for idx, column in enumerate(columns):
-    #         # Select the axis for the current plot
-    #         ax = axes[idx]
-
-    #         # Create Q-Q plot
-    #         probplot(df[column].dropna(), dist="norm", plot=ax)
-            
-    #         # Set the color of the Q-Q plot line to red
-    #         ax.get_lines()[1].set_color('red')
-            
-    #         # Set the title of the subplot
-    #         ax.set_title(f'Q-Q Plot of {column}')
-
-    #     # Hide any unused subplots
-    #     for i in range(num_columns, len(axes)):
-    #         fig.delaxes(axes[i])
-
-    #     # Adjust layout
-    #     fig.tight_layout()
-
-    #     # Display the plot
-    #     plt.show()
-
     def plot_qq(self, df: pd.DataFrame, columns: list):
         """
         Plot Q-Q plots of the specified columns in a grid format.
+
         Args:
             df (pd.DataFrame): The DataFrame to visualize.
             columns (list): The list of columns to plot.
         """
-        num_columns = 3  # Number of columns in the grid
-        num_rows = (len(columns) + num_columns - 1) // num_columns  # Calculate the number of rows needed
-        fig, axes = plt.subplots(num_rows, num_columns, figsize=(15, num_rows * 5))  # Create a grid of subplots
+        # Number of columns for the grid
+        num_columns = len(columns)
+        num_rows = math.ceil(num_columns / 3)
 
-        for i, column in enumerate(columns):
-            row, col = divmod(i, num_columns)  # Determine the row and column index in the grid
-            probplot(df[column].dropna(), dist="norm", plot=axes[row, col])  # Create Q-Q plot
-            axes[row, col].get_lines()[1].set_color('red')  # Set the color of the Q-Q plot line to red
-            axes[row, col].set_title(f'Q-Q Plot of {column}')  # Set the title of the subplot
+        # Create subplots with a specific size
+        fig, axes = plt.subplots(num_rows, 3, figsize=(20, num_rows * 6))
 
-        plt.tight_layout()  # Adjust subplots to fit into the figure area
-        plt.show()  # Display the plot
+        # Flatten axes array for easy iteration
+        axes = axes.flatten()
+
+        for idx, column in enumerate(columns):
+            # Select the axis for the current plot
+            ax = axes[idx]
+
+            # Create Q-Q plot
+            probplot(df[column].dropna(), dist="norm", plot=ax)
+            
+            # Set the color of the Q-Q plot line to red
+            ax.get_lines()[1].set_color('red')
+            
+            # Set the title of the subplot
+            ax.set_title(f'Q-Q Plot of {column}')
+
+        # Hide any unused subplots
+        for i in range(num_columns, len(axes)):
+            fig.delaxes(axes[i])
+
+        # Adjust layout
+        fig.tight_layout()
+
+        # Display the plot
+        plt.show()
+
+    def plot_categorical_data(self, df: pd.DataFrame, categorical_columns: list):
+        """
+        Plot bar charts for categorical columns in a grid format.
+
+        Args:
+            df (pd.DataFrame): The DataFrame to visualize.
+            categorical_columns (list): List of categorical columns to plot.
+        """
+        num_columns = 3  # Number of plots per row
+        num_rows = math.ceil(len(categorical_columns) / num_columns)
+        
+        fig, axes = plt.subplots(num_rows, num_columns, figsize=(num_columns * 5, num_rows * 5))
+        axes = axes.flatten()
+        
+        for i, column in enumerate(categorical_columns):
+            sns.countplot(data=df, x=column, ax=axes[i])
+            axes[i].set_title(f'Distribution of {column}')
+            axes[i].set_ylabel('Count')
+            axes[i].set_xlabel(column)
+        
+        # Remove any empty subplots
+        for j in range(i + 1, len(axes)):
+            fig.delaxes(axes[j])
+        
+        plt.tight_layout()
+        plt.show()
+
+    def plot_boxplots(self, df: pd.DataFrame, columns: list, rows=2, cols=3, figsize=(15, 10)):
+        """
+        Plot boxplots for the specified columns.
+
+        Args:
+            df (pd.DataFrame): The DataFrame to visualize.
+            columns (list): List of columns to plot.
+            rows (int): Number of rows in the grid.
+            cols (int): Number of columns in the grid.
+            figsize (tuple): Size of the figure.
+        """
+        fig, axes = plt.subplots(rows, cols, figsize=figsize)
+        axes = axes.flatten()
+
+        for i, col in enumerate(columns):
+            sns.boxplot(y=df[col], ax=axes[i])
+            axes[i].set_title(col)
+
+        # Hide any unused subplots
+        for i in range(len(columns), len(axes)):
+            fig.delaxes(axes[i])
+
+        plt.tight_layout()
+        plt.show()
+
+    # def plot_qq(self, df: pd.DataFrame, columns: list):
+    #     """
+    #     Plot Q-Q plots of the specified columns in a grid format.
+    #     Args:
+    #         df (pd.DataFrame): The DataFrame to visualize.
+    #         columns (list): The list of columns to plot.
+    #     """
+    #     num_columns = 3  # Number of columns in the grid
+    #     num_rows = (len(columns) + num_columns - 1) // num_columns  # Calculate the number of rows needed
+    #     fig, axes = plt.subplots(num_rows, num_columns, figsize=(15, num_rows * 5))  # Create a grid of subplots
+
+    #     for i, column in enumerate(columns):
+    #         row, col = divmod(i, num_columns)  # Determine the row and column index in the grid
+    #         probplot(df[column].dropna(), dist="norm", plot=axes[row, col])  # Create Q-Q plot
+    #         axes[row, col].get_lines()[1].set_color('red')  # Set the color of the Q-Q plot line to red
+    #         axes[row, col].set_title(f'Q-Q Plot of {column}')  # Set the title of the subplot
+
+    #     plt.tight_layout()  # Adjust subplots to fit into the figure area
+    #     plt.show()  # Display the plot
 
 

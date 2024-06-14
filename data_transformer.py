@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 from pandas.api.types import is_numeric_dtype
 from scipy import stats
-
+import numpy as np
+from typing import List
 
 class DataTransformer:
     """
@@ -87,13 +88,46 @@ class DataTransformer:
         return self.df
 
 
-    def transform_skewed_columns(self, columns, method='box-cox'):
+    # def transform_skewed_columns(self, columns: List[str], method: str = 'box-cox'):
+    #     """
+    #     Apply transformation to specified skewed columns to reduce skewness.
+
+    #     Args:
+    #         columns (list): List of columns to transform.
+    #         method (str): The transformation method to use ('box-cox', 'log', or 'yeo-johnson').
+
+    #     Returns:
+    #         pd.DataFrame: The DataFrame with transformed columns.
+    #     """
+    #     for column in columns:
+    #         if column not in self.df.columns:
+    #             print(f"Column '{column}' does not exist in the DataFrame")
+    #             continue
+
+    #         if method == 'log':
+    #             # Apply log transformation
+    #             self.df[column] = self.df[column].apply(lambda x: np.log(x) if x > 0 else 0)               
+    #         elif method == 'box-cox':
+    #             self.df[column], _ = stats.boxcox(self.df[column])
+    #         elif method == 'log':
+    #             # Apply log transformation
+    #             self.df[column] = self.df[column].apply(lambda x: np.log(x) if x > 0 else 0)
+    #         elif method == 'yeo-johnson':
+    #             # Apply Yeo-Johnson transformation
+    #             self.df[column], _ = stats.yeojohnson(self.df[column])
+    #         else:
+    #             print(f"Method '{method}' is not recognized. Use 'box-cox', 'log', or 'yeo-johnson'.")
+    #             continue
+
+    #     return self.df
+
+    def transform_skewed_columns(self, columns: List[str], method: str = 'box-cox') -> pd.DataFrame:
         """
         Apply transformation to specified skewed columns to reduce skewness.
 
         Args:
             columns (list): List of columns to transform.
-            method (str): The transformation method to use ('box-cox' or 'log').
+            method (str): The transformation method to use ('box-cox', 'log', or 'yeo-johnson').
 
         Returns:
             pd.DataFrame: The DataFrame with transformed columns.
@@ -103,15 +137,18 @@ class DataTransformer:
                 print(f"Column '{column}' does not exist in the DataFrame")
                 continue
 
-            if method == 'box-cox':
-                # Apply Box-Cox transformation
-                self.df[column] = self.df[column].apply(lambda x: np.log(x) if x <= 0 else x)
-                self.df[column], _ = stats.boxcox(self.df[column].dropna())
-            elif method == 'log':
+            if method == 'log':
                 # Apply log transformation
-                self.df[column] = self.df[column].apply(lambda x: np.log(x) if x > 0 else np.nan)
+                self.df[column] = self.df[column].apply(lambda x: np.log(x) if x > 0 else 0)
+            elif method == 'box-cox':
+                # Apply Box-Cox transformation
+                # self.df[column] = self.df[column].apply(lambda x: x if x > 0 else 1e-6)  # Small constant to avoid log(0)
+                self.df[column], _ = stats.boxcox(self.df[column])
+            elif method == 'yeo-johnson':
+                # Apply Yeo-Johnson transformation
+                self.df[column], _ = stats.yeojohnson(self.df[column])
             else:
-                print(f"Method '{method}' is not recognized. Use 'box-cox' or 'log'.")
+                print(f"Method '{method}' is not recognized. Use 'box-cox', 'log', or 'yeo-johnson'.")
                 continue
 
         return self.df
