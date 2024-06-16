@@ -258,3 +258,49 @@ class Plotter:
         
         # Display the plot
         plt.show()
+
+
+    # def plot_bar_chart(self, df: pd.DataFrame):
+    #     """
+    #     Plot the number of sales by region in a bar chart.
+
+    #     Args:
+    #         df (pd.DataFrame): The DataFrame containing the data.
+    #     """
+    #     # # Group by the 'region' column and sum the 'revenue' column
+    #     # region_sales = df.groupby('region')['revenue'].sum()
+
+    #     # # Sort the result in descending order
+    #     # region_sales = region_sales.sort_values(ascending=False)
+
+    #     # Create a bar plot using seaborn
+    #     plt.figure(figsize=(12, 6))
+    #     sns.barplot(x=df.index, y=df.values, palette="viridis")
+
+    #     # Add titles and labels
+    #     plt.title('Number of Sales by Region')
+    #     plt.xlabel('Region')
+    #     plt.ylabel('Number of Sales')
+    #     plt.xticks(rotation=45)
+
+    #     # Display the plot
+    #     plt.show()
+
+    def plot_bar_chart(self, df, title, xlabel, ylabel):
+        """
+        Plot the number of sales by region in a bar chart.
+
+        Args:
+            df (pd.DataFrame): The DataFrame containing the data.
+        """
+        plt.figure(figsize=(12, 6))
+        sns.barplot(x=df.index, y=df.values, palette="viridis")
+
+        # Add titles and labels
+        plt.title(title)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.xticks(rotation=45)
+
+        # Display the plot
+        plt.show()
