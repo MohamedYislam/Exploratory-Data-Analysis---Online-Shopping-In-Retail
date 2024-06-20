@@ -64,59 +64,29 @@ To perform the analysis, you can run the Jupyter Notebook provided in the reposi
 ```sh
 jupyter notebook EDA.ipynb
 ```
-
 ## Business Insights
 
-### 1. High Bounce and Exit Rates
-- **Insight**: The website exhibits high bounce and exit rates, indicating that many users leave the site after viewing only one page or after a short interaction.
-- **Detail**: Analysis showed that a significant portion of users left the website after visiting only the homepage or a single product page, suggesting issues with user engagement and site navigation.
-- **Recommendation**: 
-    - Improve the design and content of landing pages to capture user interest immediately.
-    - Streamline the navigation process to make it easier for users to find what they are looking for.
-    - Implement engaging content such as videos, testimonials, and interactive elements.
-    - Use clear and compelling call-to-action buttons to guide users to other parts of the website.
+### Sales Proportion on Weekends vs. Weekdays
+- **Analysis:** The analysis revealed that a significant proportion of sales occur on weekdays (79.14%), while weekends account for a smaller share (20.86%).
+- **Recommendation:** Consider increasing marketing efforts and promotional campaigns on weekends to boost sales during these periods. Additionally, investigate potential factors driving higher weekday sales and see if they can be replicated or enhanced on weekends.
 
-### 2. Product-Related Engagement
-- **Insight**: Users spend considerable time on product-related pages, but conversion rates vary significantly across different products.
-- **Detail**: Detailed analysis indicated that while users frequently visit product pages, certain products have lower conversion rates despite high traffic, pointing to potential issues with product presentation or pricing.
-- **Recommendation**:
-    - Enhance product pages with high-quality images, detailed descriptions, and customer reviews to build trust and interest.
-    - Use A/B testing to experiment with different layouts, pricing strategies, and promotional offers.
-    - Implement personalized product recommendations based on user browsing history and preferences to increase the likelihood of conversion.
+### Revenue by Region
+- **Analysis:** The regions generating the most sales are North America (640), followed by Western Europe (279) and Eastern Europe (158). Other regions like Asia, South America, and Africa also contribute to the revenue but to a lesser extent.
+- **Recommendation:** Focus marketing and expansion efforts on North America and Europe, as these regions show the highest sales potential. Tailor marketing strategies to address regional preferences and cultural differences to maximize revenue.
 
-### 3. Impact of Weekends
-- **Insight**: There is a noticeable increase in user activity during weekends, with more sessions and higher engagement levels.
-- **Detail**: The analysis revealed spikes in website traffic and user interactions during weekends, suggesting that users are more likely to browse and shop during their leisure time.
-- **Recommendation**:
-    - Leverage this trend by offering special promotions, discounts, and marketing campaigns specifically targeting weekend shoppers.
-    - Ensure the website is fully optimized and can handle increased traffic during peak times.
-    - Consider launching new products or features on weekends to maximize visibility and engagement.
+### Effective Website Traffic Sources for Sales
+- **Analysis:** The most effective traffic sources for generating sales are Google Search (732), followed by Facebook Ads (225) and Instagram Ads (151). Other sources like Bing Search, Youtube Channel, and Affiliate Marketing contribute less significantly.
+- **Recommendation:** Invest more in Google Search and social media advertising on platforms like Facebook and Instagram, as they yield the highest returns. Consider optimizing SEO strategies and expanding social media campaigns to further enhance traffic from these sources.
 
-### 4. Browser and Operating System Trends
-- **Insight**: Certain browsers and operating systems are more popular among users, influencing their browsing experience and engagement levels.
-- **Detail**: Data analysis showed that users predominantly accessed the website using specific browsers and operating systems, which could impact their overall experience due to compatibility issues.
-- **Recommendation**:
-    - Ensure that the website is fully compatible with and performs optimally on the most popular browsers and operating systems identified in the analysis.
-    - Conduct regular testing and optimization for these platforms to provide a seamless user experience.
-    - Address any identified issues or bugs related to specific browsers or operating systems promptly.
+### Time Spent on Website Tasks
+- **Analysis:** Users spend the majority of their time on product-related tasks (87.80%), with significantly less time spent on administrative (10.81%) and informational tasks (1.40%).
+- **Recommendation:** Ensure that the product-related pages are optimized for user experience, with clear information, high-quality images, and easy navigation. Streamline administrative and informational tasks to minimize user frustration and enhance overall website usability.
 
-### 5. New vs. Returning Visitors
-- **Insight**: The behavior of new and returning visitors differs significantly, with returning visitors showing higher engagement and conversion rates.
-- **Detail**: Analysis highlighted that returning visitors tend to spend more time on the website and are more likely to complete purchases compared to new visitors.
-- **Recommendation**:
-    - Develop targeted marketing strategies to attract new visitors, such as introductory offers, discounts, and targeted advertising.
-    - Engage returning visitors with loyalty programs, personalized recommendations, and exclusive offers to maintain their interest and encourage repeat purchases.
-    - Use retargeting campaigns to bring back visitors who left the site without completing a purchase.
+### Breakdown of Sales by Month
+- **Analysis:** Sales peak in November (740), followed by May (342) and December (274). Other months see relatively lower sales volumes.
+- **Recommendation:** Prepare for high sales volumes in November and December by ensuring adequate inventory and staffing. Consider running special promotions or marketing campaigns during these peak months. Additionally, investigate the factors contributing to higher sales in May and explore opportunities to replicate this success in other months.
 
-### 6. Handling Missing Data
-- **Insight**: Missing data was identified and appropriately handled to ensure robust analysis and accurate insights.
-- **Detail**: The dataset contained missing values that could skew the analysis if not addressed. Techniques such as imputation and removal of incomplete records were employed.
-- **Recommendation**:
-    - Continuously monitor data quality and implement mechanisms to handle missing data in real-time.
-    - Use advanced imputation techniques to fill in missing values accurately without introducing bias.
-    - Ensure that data collection processes are robust and capture all necessary information to minimize missing data in the future.
-
-By implementing these recommendations, the online shopping platform can enhance user engagement, improve the user experience, and ultimately drive higher conversion rates and sales.
+By understanding and acting on these key insights, the retail company can optimize its marketing strategies, improve customer experience, and ultimately drive higher sales and revenue.
 
 
 ## File Structure
