@@ -2,7 +2,7 @@
 
 ## Table of Contents
 - [Description](#description)
-- [Tech stack] (#tech_stack)
+- [Tech stack](#tech_stack)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Business Insights](#Business_Insights)
