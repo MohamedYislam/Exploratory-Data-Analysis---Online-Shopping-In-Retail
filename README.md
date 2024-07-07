@@ -91,18 +91,23 @@ By understanding and acting on these key insights, the retail company can optimi
 
 ## File Structure
 ```sh
-online-shopping-activity-analysis/
+online-shopping-in-retail-analysis/
 │
-├── data_transformer.py
-├── data_extraction.py
-├── data_frame_info.py
-├── plotter.py
-├── EDA.ipynb
-├── customer_activity.csv
+├── utils/
+│   ├── data_transformer.py
+│   ├── data_extraction.py
+│   ├── data_frame_info.py
+│   └── plotter.py
+├── data/
+│   └── customer_activity.csv
+├── notebook/
+│   └── EDA.ipynb
 ├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
+
+
 
 • **data_transformer.py:** Used to transform and clean the data.
 
@@ -119,7 +124,7 @@ online-shopping-activity-analysis/
 • **requirements.txt:** List of required packages for the project.
 
 • **.gitignore:** Specifies files and directories to be ignored by Git.
-README.md: Project documentation.
+
 
 ## License
 
